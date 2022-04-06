@@ -1,13 +1,9 @@
 import { Formik } from 'formik';
-import { useContext } from 'react';
 import {View , Text, TextInput, Button, Alert} from 'react-native'
 
+import IStep from './IStep';
 
-import Context from './contextHook';
-
-export default function Step1() {
-  // TODO - APPLY CONTEXT
-  // const step1 = useContext(Context)
+export default function Step2({ nextStep }: IStep) {
   
   return(
     <View>
@@ -20,7 +16,11 @@ export default function Step1() {
                         escolaridade: '',
                         telefone: '',
                         email: '' }}
-        onSubmit={values => Alert.alert(`idade: ${values.idade}\nsexo: ${values.sexo}\nescolaridade: ${values.escolaridade}\ntelefone: ${values.telefone}\nemail: ${values.email}`)}
+        onSubmit={values => {nextStep({email: values.email,
+                                       escolaridade: values.escolaridade,
+                                       idade: values.idade,
+                                       sexo: values.sexo,
+                                       telefone: values.telefone})}}
         >
           {(props) => (
             <>
@@ -45,7 +45,7 @@ export default function Step1() {
               onChangeText={props.handleChange('email')}
             />
             <Button
-              title='Submit Form'
+              title='Next'
               onPress={props.submitForm}
             />
             </>

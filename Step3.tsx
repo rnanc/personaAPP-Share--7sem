@@ -2,12 +2,9 @@ import { Formik } from 'formik';
 import {Picker} from '@react-native-community/picker';
 import {View , Text, TextInput, Button, Alert} from 'react-native'
 
+import IStep from './IStep';
 
-import Context from './contextHook';
-
-export default function Step1() {
-  // TODO - APPLY CONTEXT
-  // const step1 = useContext(Context)
+export default function Step3({ nextStep }: IStep) {
   
   return(
     <View>
@@ -16,7 +13,8 @@ export default function Step1() {
       </Text>
       <Formik
         initialValues={{ setor: '', titulo: 'CEO', }}
-        onSubmit={values => Alert.alert(`Setor: ${values.setor}\nTítulo: ${values.titulo}`)}
+        onSubmit={values => nextStep({ setor: values.setor,
+                                       titulo: values.titulo})}
         >
           {(props) => (
             <>
@@ -34,7 +32,7 @@ export default function Step1() {
               <Picker.Item label="Escraviário" value="Escraviário" />
             </Picker>
             <Button
-              title='Submit Form'
+              title='Next'
               onPress={props.submitForm}
             />
             </>

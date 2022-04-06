@@ -1,13 +1,14 @@
 import { Formik } from 'formik';
-import { useContext } from 'react';
 import {View , Text, TextInput, Button, Alert, TouchableOpacity, Image} from 'react-native'
 
+import IStep from './IStep';
 
-import Context from './contextHook';
+interface Step1 {
+  name: string
+  avatar: string
+}
 
-export default function Step1() {
-  // TODO - APPLY CONTEXT
-  // const step1 = useContext(Context)
+export default function Step1({ nextStep }: IStep) {
   
   return(
     <View>
@@ -16,7 +17,8 @@ export default function Step1() {
       </Text>
       <Formik
         initialValues={{ name: '', avatar: '' }}
-        onSubmit={values => Alert.alert(`nome: ${values.name}\navatar:${values.avatar}`)}
+        onSubmit={values => nextStep({name: values.name,
+                                      avatar: values.avatar})}
         >
           {(props) => (
             <>
@@ -37,7 +39,7 @@ export default function Step1() {
             />
             </TouchableOpacity>
             <Button
-              title='Submit Form'
+              title='Next'
               onPress={props.submitForm}
             />
             </>

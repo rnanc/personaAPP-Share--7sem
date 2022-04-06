@@ -7,6 +7,7 @@ import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
 import Step4 from './Step4';
+import { Form } from 'formik';
 
 const labels = ["Identificação","Dados Pessoais","Posicionamento","Habilidade"];
 const customStyles = {
@@ -40,21 +41,40 @@ const FORMS = [
   {component: Step4},
 ]
 
+export interface States {
+  name: string
+  avatar: string
+  idade: string
+  sexo: string
+  escolaridade: string
+  telefone: string
+  email: string
+  setor: string
+  titulo: string
+  habilidades: string[]
+}
+
 export default function App() {
   const [currentStep, setCurrentStep] = useState<number>(0)
+  const [states, setStates] = useState({} as States)
 
   function StepForm(){
     const Form = FORMS[currentStep].component
   
     return (
       <>
-        <Form></Form>
+        <Form nextStep={nextStep} info={info}/>
       </>
     )
   }
 
-  const nextStep = () => {
+  const nextStep = (newStates: States) => {
+    setStates({...states, ...newStates})
     if(currentStep < FORMS.length)setCurrentStep(currentStep+1);
+  }
+
+  const info = (): States => {
+    return states
   }
 
   return (
@@ -70,11 +90,6 @@ export default function App() {
       />
 
       <StepForm />
-
-      <Button 
-        title='NEXT'
-        onPress={() => { nextStep() }}
-      />
       
     </View>
   );
